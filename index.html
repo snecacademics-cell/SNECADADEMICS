@@ -9,7 +9,6 @@
     * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body { background-color: #f8fafc; margin: 0; padding: 0; color: #1e293b; }
 
-    /* Navigation Bar */
     .navbar {
       background-color: #ffffff;
       padding: 12px 24px;
@@ -23,7 +22,7 @@
       border-bottom: 1px solid #e2e8f0;
     }
     .logo-container { display: flex; align-items: center; gap: 10px; }
-    .logo-text { font-weight: 700; font-size: 18px; color: #1e40af; letter-spacing: -0.5px; }
+    .logo-text { font-weight: 700; font-size: 18px; color: #1e40af; }
     .badge-role {
       font-size: 11px;
       font-weight: 600;
@@ -43,10 +42,8 @@
       cursor: pointer;
     }
 
-    /* Container */
     .container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
 
-    /* Card System */
     .card {
       background: #ffffff;
       border-radius: 12px;
@@ -56,7 +53,6 @@
       margin-bottom: 20px;
     }
 
-    /* Filters Bar */
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -73,7 +69,6 @@
     }
     select:focus, input:focus { outline: none; border-color: #2563eb; background: #fff; }
 
-    /* Stats Overview */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -90,7 +85,6 @@
     .stat-val { font-size: 24px; font-weight: 700; color: #1e40af; }
     .stat-lbl { font-size: 12px; color: #64748b; font-weight: 500; }
 
-    /* Action Buttons */
     .btn-action {
       padding: 9px 16px;
       border: none;
@@ -99,12 +93,10 @@
       font-size: 13px;
       cursor: pointer;
       color: white;
-      white-space: nowrap;
     }
     .btn-csv { background-color: #16a34a; }
     .btn-reload { background-color: #2563eb; }
 
-    /* Table */
     .table-container {
       overflow-x: auto;
       border: 1px solid #e2e8f0;
@@ -126,7 +118,6 @@
     td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
     tr:hover { background-color: #f8fafc; }
 
-    /* Login Screen */
     .login-wrapper {
       min-height: 80vh;
       display: flex;
@@ -155,9 +146,7 @@
       cursor: pointer;
       margin-top: 10px;
     }
-    .btn-submit:hover { background: #1d4ed8; }
 
-    /* Student Profile Modal/Card */
     .profile-card {
       background: white;
       border-radius: 12px;
@@ -182,7 +171,6 @@
 </head>
 <body>
 
-  <!-- App Header -->
   <div class="navbar" id="appNavbar" style="display: none;">
     <div class="logo-container">
       <span class="logo-text">SNEC ACADEMICS</span>
@@ -193,14 +181,14 @@
 
   <div class="container">
 
-    <!-- 1. LOGIN SECTION -->
+    <!-- LOGIN -->
     <div id="loginSection" class="login-wrapper">
       <div class="login-box">
         <h2 style="margin: 0 0 5px 0; color: #1e40af;">SNEC Portal</h2>
-        <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Super Admin / Principal / Student Login</p>
+        <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Super Admin / Student Login</p>
         
         <form id="loginForm">
-          <input type="password" id="loginKey" required placeholder="Enter PIN or Student UID / Mobile" style="margin-bottom: 12px;">
+          <input type="password" id="loginKey" required placeholder="Enter Super Admin PIN or Student UID / Mobile" style="margin-bottom: 12px;">
           <button type="submit" class="btn-submit" id="loginBtn">Login to Portal</button>
         </form>
 
@@ -208,10 +196,8 @@
       </div>
     </div>
 
-    <!-- 2. MASTER DIRECTORY DASHBOARD (Super Admin & Principal) -->
+    <!-- DASHBOARD -->
     <div id="dashboardSection" style="display: none;">
-      
-      <!-- Quick Stats -->
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-val" id="totalCountDisplay">0</div>
@@ -223,23 +209,16 @@
         </div>
         <div class="stat-card">
           <div class="stat-val" id="collegeCountDisplay">0</div>
-          <div class="stat-lbl">Total Institutions</div>
+          <div class="stat-lbl">Active Institutions</div>
         </div>
       </div>
 
       <div class="card">
-        <!-- Multi-variable Filter Bar -->
         <div class="filter-grid">
           <input type="text" id="globalSearch" placeholder="Search by Name, UID, Ad No, Aadhaar...">
-          <select id="collegeFilter">
-            <option value="">All Colleges / Institutions</option>
-          </select>
-          <select id="classFilter">
-            <option value="">All Classes</option>
-          </select>
-          <select id="divisionFilter">
-            <option value="">All Divisions</option>
-          </select>
+          <select id="collegeFilter"><option value="">All Colleges / Institutions</option></select>
+          <select id="classFilter"><option value="">All Classes</option></select>
+          <select id="divisionFilter"><option value="">All Divisions</option></select>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
@@ -250,14 +229,13 @@
           </div>
         </div>
 
-        <!-- Scrollable Table -->
         <div class="table-container">
           <table>
             <thead>
               <tr>
                 <th>Sl</th>
                 <th>UID / SNEC Ad</th>
-                <th>Full Name</th>
+                <th>Student Name</th>
                 <th>Name (Arabic)</th>
                 <th>Institution</th>
                 <th>Class</th>
@@ -266,10 +244,10 @@
                 <th>DOB</th>
                 <th>Parent Phone</th>
                 <th>Guardian Phone</th>
-                <th>Place / Panchayat</th>
+                <th>Local Body</th>
                 <th>District</th>
                 <th>State</th>
-                <th>Actions</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="studentTableBody">
@@ -280,17 +258,16 @@
       </div>
     </div>
 
-    <!-- 3. STUDENT PROFILE VIEW -->
+    <!-- STUDENT VIEW -->
     <div id="studentSection" style="display: none;">
       <div class="profile-card card">
-        <h3 style="margin-top: 0; color: #1e40af; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">Student Profile</h3>
+        <h3 style="margin-top: 0; color: #1e40af; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">Student Profile Card</h3>
         <div id="studentProfileContent"></div>
       </div>
     </div>
 
   </div>
 
-  <!-- Firebase Modular Scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -308,14 +285,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Passcode Definitions
     const SUPER_ADMIN_PIN = "9999";
-    
     let allStudents = [];
-    let currentRole = null; // 'admin' | 'principal' | 'student'
-    let assignedCollege = null;
 
-    // --- LOGIN HANDLER ---
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const key = document.getElementById("loginKey").value.trim();
@@ -327,32 +299,27 @@
       btn.innerText = "Authenticating...";
 
       if (key === SUPER_ADMIN_PIN) {
-        currentRole = 'admin';
         document.getElementById("userRoleBadge").innerText = "Super Admin";
         showDashboard();
       } else {
-        // First check if it matches a registered student UID
         try {
           const docRef = doc(db, "students", key);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
-            currentRole = 'student';
             document.getElementById("userRoleBadge").innerText = "Student Portal";
             showStudentProfile(docSnap.data());
           } else {
-            // Check by Phone number query if direct UID not found
             await loadAllStudents();
-            const foundByPhone = allStudents.find(s => 
-              s["Contact No of Parent"] == key || 
-              s["Mobile Number of Guardian"] == key ||
-              s["Phone No"] == key
+            const found = allStudents.find(s => 
+              s["Parent Contact No."] == key || 
+              s["Guardian's Mobile No."] == key ||
+              s["Phone No."] == key
             );
 
-            if (foundByPhone) {
-              currentRole = 'student';
+            if (found) {
               document.getElementById("userRoleBadge").innerText = "Student Portal";
-              showStudentProfile(foundByPhone);
+              showStudentProfile(found);
             } else {
               msg.innerText = "Invalid PIN, UID, or Mobile Number!";
             }
@@ -391,18 +358,18 @@
 
       document.getElementById("studentProfileContent").innerHTML = `
         <div class="detail-grid">
-          <div class="detail-item"><strong>STUDENT NAME</strong> ${data["NAME OF THE STUDENT"] || '-'}</div>
-          <div class="detail-item"><strong>NAME IN ARABIC</strong> ${data["NAME OF THE STUDENT IN ARABIC"] || '-'}</div>
-          <div class="detail-item"><strong>UID / SNEC AD NO</strong> ${data["UID/ SNEC Ad. No"] || data.id}</div>
-          <div class="detail-item"><strong>COLLEGE AD NO</strong> ${data["COLLEGE Ad. No"] || '-'}</div>
-          <div class="detail-item"><strong>INSTITUTION</strong> ${data["INSTITUTION"] || '-'}</div>
-          <div class="detail-item"><strong>CLASS & DIVISION</strong> ${data["CLASS"] || '-'} (${data["Division"] || '-'})</div>
+          <div class="detail-item"><strong>STUDENT NAME</strong> ${data["Student Name"] || '-'}</div>
+          <div class="detail-item"><strong>NAME IN ARABIC</strong> ${data["Student Name (Arabic)"] || '-'}</div>
+          <div class="detail-item"><strong>UID / SNEC AD NO</strong> ${data["UID / SNEC Admission No."] || data.id}</div>
+          <div class="detail-item"><strong>COLLEGE AD NO</strong> ${data["College Admission No."] || '-'}</div>
+          <div class="detail-item"><strong>INSTITUTION</strong> ${data["Institution"] || '-'}</div>
+          <div class="detail-item"><strong>CLASS & DIVISION</strong> ${data["Class"] || '-'} (${data["Division "] || data["Division"] || '-'})</div>
           <div class="detail-item"><strong>DATE OF BIRTH</strong> ${data["Date of Birth"] || '-'}</div>
           <div class="detail-item"><strong>BLOOD GROUP</strong> ${data["Blood Group"] || '-'}</div>
-          <div class="detail-item"><strong>FATHER'S NAME</strong> ${data["NAME OF FATHER"] || '-'}</div>
-          <div class="detail-item"><strong>PARENT CONTACT</strong> ${data["Contact No of Parent"] || '-'}</div>
-          <div class="detail-item"><strong>TALUK / DISTRICT</strong> ${data["Taluk"] || '-'}, ${data["District"] || '-'}</div>
-          <div class="detail-item"><strong>STATUS</strong> <span style="color:#16a34a; font-weight:700;">${data["Student Presence"] || data["recordStatus"] || 'Active'}</span></div>
+          <div class="detail-item"><strong>FATHER'S NAME</strong> ${data["Father's Name"] || '-'}</div>
+          <div class="detail-item"><strong>PARENT CONTACT</strong> ${data["Parent Contact No."] || '-'}</div>
+          <div class="detail-item"><strong>LOCAL BODY / DISTRICT</strong> ${data["Local Body"] || '-'}, ${data["District"] || '-'}</div>
+          <div class="detail-item"><strong>STATUS</strong> <span style="color:#16a34a; font-weight:700;">${data["Student Status"] || data["recordStatus"] || 'Active'}</span></div>
         </div>
       `;
     }
@@ -413,9 +380,10 @@
       const divisions = new Set();
 
       allStudents.forEach(s => {
-        if (s["INSTITUTION"]) colleges.add(s["INSTITUTION"].trim());
-        if (s["CLASS"]) classes.add(String(s["CLASS"]).trim());
-        if (s["Division"]) divisions.add(String(s["Division"]).trim());
+        if (s["Institution"]) colleges.add(s["Institution"].trim());
+        if (s["Class"]) classes.add(String(s["Class"]).trim());
+        const div = s["Division "] || s["Division"];
+        if (div) divisions.add(String(div).trim());
       });
 
       const colSelect = document.getElementById("collegeFilter");
@@ -446,29 +414,28 @@
       tb.innerHTML = data.slice(0, 500).map((s, i) => `
         <tr>
           <td>${i + 1}</td>
-          <td><strong>${s["UID/ SNEC Ad. No"] || s.id}</strong></td>
-          <td>${s["NAME OF THE STUDENT"] || '-'}</td>
-          <td>${s["NAME OF THE STUDENT IN ARABIC"] || '-'}</td>
-          <td>${s["INSTITUTION"] || '-'}</td>
-          <td>${s["CLASS"] || '-'}</td>
-          <td>${s["Division"] || '-'}</td>
+          <td><strong>${s["UID / SNEC Admission No."] || s.id}</strong></td>
+          <td>${s["Student Name"] || '-'}</td>
+          <td>${s["Student Name (Arabic)"] || '-'}</td>
+          <td>${s["Institution"] || '-'}</td>
+          <td>${s["Class"] || '-'}</td>
+          <td>${s["Division "] || s["Division"] || '-'}</td>
           <td>${s["Gender"] || '-'}</td>
           <td>${s["Date of Birth"] || '-'}</td>
-          <td>${s["Contact No of Parent"] || '-'}</td>
-          <td>${s["Mobile Number of Guardian"] || '-'}</td>
-          <td>${s["PANCHAYAT/ MUNICIPALITY/ CORPORATION"] || '-'}</td>
+          <td>${s["Parent Contact No."] || '-'}</td>
+          <td>${s["Guardian's Mobile No."] || '-'}</td>
+          <td>${s["Local Body"] || '-'}</td>
           <td>${s["District"] || '-'}</td>
-          <td>${s["STATE"] || '-'}</td>
+          <td>${s["State"] || '-'}</td>
           <td><button onclick="viewStudentModal('${s.id}')" style="padding:4px 8px; border:none; background:#dbeafe; color:#1e40af; border-radius:4px; cursor:pointer; font-weight:600;">View</button></td>
         </tr>
       `).join('');
 
       if (data.length > 500) {
-        tb.innerHTML += `<tr><td colspan="15" style="text-align:center; background:#f8fafc; font-weight:600;">Showing first 500 of ${data.length} records. Refine search/filters to narrow down.</td></tr>`;
+        tb.innerHTML += `<tr><td colspan="15" style="text-align:center; background:#f8fafc; font-weight:600;">Showing first 500 of ${data.length} records. Refine filters to narrow down.</td></tr>`;
       }
     }
 
-    // Dynamic Filter Handler
     function filterStudents() {
       const q = document.getElementById("globalSearch").value.toLowerCase();
       const col = document.getElementById("collegeFilter").value;
@@ -477,15 +444,14 @@
 
       const filtered = allStudents.filter(s => {
         const matchQ = !q || 
-          (s["NAME OF THE STUDENT"] && s["NAME OF THE STUDENT"].toLowerCase().includes(q)) ||
-          (s["UID/ SNEC Ad. No"] && String(s["UID/ SNEC Ad. No"]).toLowerCase().includes(q)) ||
-          (s["COLLEGE Ad. No"] && String(s["COLLEGE Ad. No"]).toLowerCase().includes(q)) ||
-          (s["Aadhaar No"] && String(s["Aadhaar No"]).includes(q)) ||
-          (s["Contact No of Parent"] && String(s["Contact No of Parent"]).includes(q));
+          (s["Student Name"] && s["Student Name"].toLowerCase().includes(q)) ||
+          (s["UID / SNEC Admission No."] && String(s["UID / SNEC Admission No."]).toLowerCase().includes(q)) ||
+          (s["College Admission No."] && String(s["College Admission No."]).toLowerCase().includes(q)) ||
+          (s["Parent Contact No."] && String(s["Parent Contact No."]).includes(q));
 
-        const matchCol = !col || s["INSTITUTION"] === col;
-        const matchCls = !cls || String(s["CLASS"]) === cls;
-        const matchDiv = !div || String(s["Division"]) === div;
+        const matchCol = !col || s["Institution"] === col;
+        const matchCls = !cls || String(s["Class"]) === cls;
+        const matchDiv = !div || (s["Division "] === div || s["Division"] === div);
 
         return matchQ && matchCol && matchCls && matchDiv;
       });
@@ -498,15 +464,14 @@
     document.getElementById("classFilter").addEventListener("change", filterStudents);
     document.getElementById("divisionFilter").addEventListener("change", filterStudents);
 
-    // CSV Export
     document.getElementById("exportBtn").addEventListener("click", () => {
-      let csv = "Sl,UID,Name,Name Arabic,College,Class,Division,DOB,Parent Phone,District\n";
+      let csv = "Sl,UID,Student Name,Name Arabic,Institution,Class,Division,DOB,Parent Phone,District\n";
       allStudents.forEach((s, i) => {
-        csv += `"${i+1}","${s["UID/ SNEC Ad. No"]||s.id}","${s["NAME OF THE STUDENT"]||''}","${s["NAME OF THE STUDENT IN ARABIC"]||''}","${s["INSTITUTION"]||''}","${s["CLASS"]||''}","${s["Division"]||''}","${s["Date of Birth"]||''}","${s["Contact No of Parent"]||''}","${s["District"]||''}"\n`;
+        csv += `"${i+1}","${s["UID / SNEC Admission No."]||s.id}","${s["Student Name"]||''}","${s["Student Name (Arabic)"]||''}","${s["Institution"]||''}","${s["Class"]||''}","${s["Division "]||s["Division"]||''}","${s["Date of Birth"]||''}","${s["Parent Contact No."]||''}","${s["District"]||''}"\n`;
       });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
-      link.download = `SNEC_Students_Master_${new Date().toISOString().split('T')[0]}.csv`;
+      link.download = `SNEC_Students_Active_${new Date().toISOString().split('T')[0]}.csv`;
       link.click();
     });
 
@@ -516,7 +481,6 @@
     });
 
     window.logout = function() {
-      currentRole = null;
       document.getElementById("loginKey").value = "";
       document.getElementById("appNavbar").style.display = "none";
       document.getElementById("dashboardSection").style.display = "none";
