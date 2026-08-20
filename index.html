@@ -1,228 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base target="_top">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
-  <title>SNEC ACADEMICS</title>
-  <!-- SEO Meta Tags for Google Search -->
-<meta name="description" content="SNEC Academics Master Portal - Centralized Educational Management System for Teachers, Staff, and Parents.">
-<meta name="keywords" content="SNEC Academics, SNEC Portal, Educational Portal, Teacher Management, Student Attendance">
-<meta name="author" content="SNEC Academics">
-<meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNEC ACADEMICS - Master Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: #f8fafc; margin: 0; padding: 0; color: #1e293b; }
 
-<!-- Open Graph Meta Tags for Social Media Preview (WhatsApp/Facebook) -->
-<meta property="og:title" content="SNEC ACADEMICS - Master Portal">
-<meta property="og:description" content="Access all academic modules, analytics, and live updates in one centralized hub.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://snecacademics-cell.github.io/SNECADADEMICS/">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <meta name="google-site-verification" content="jYowfPhnL-9ie_NQUwl9sDmUkFXIvJCj7PH1O1Z8dlY" />
+    /* Navigation Bar */
+    .navbar {
+      background-color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .logo-container { display: flex; align-items: center; gap: 10px; }
+    .logo-text { font-weight: 700; font-size: 18px; color: #1e40af; letter-spacing: -0.5px; }
+    .badge-role {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .btn-logout {
+      padding: 6px 14px;
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      color: #dc2626;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Container */
+    .container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
+
+    /* Card System */
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Filters Bar */
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13px;
+      background-color: #f8fafc;
+    }
+    select:focus, input:focus { outline: none; border-color: #2563eb; background: #fff; }
+
+    /* Stats Overview */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-val { font-size: 24px; font-weight: 700; color: #1e40af; }
+    .stat-lbl { font-size: 12px; color: #64748b; font-weight: 500; }
+
+    /* Action Buttons */
+    .btn-action {
+      padding: 9px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      color: white;
+      white-space: nowrap;
+    }
+    .btn-csv { background-color: #16a34a; }
+    .btn-reload { background-color: #2563eb; }
+
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      max-height: 65vh;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 600;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 2px solid #cbd5e1;
+      white-space: nowrap;
+    }
+    td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+    tr:hover { background-color: #f8fafc; }
+
+    /* Login Screen */
+    .login-wrapper {
+      min-height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 35px 25px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: #1e40af;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-submit:hover { background: #1d4ed8; }
+
+    /* Student Profile Modal/Card */
+    .profile-card {
+      background: white;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      padding: 25px;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+    .detail-item { background: #f8fafc; padding: 10px; border-radius: 6px; }
+    .detail-item strong { display: block; color: #64748b; font-size: 11px; margin-bottom: 2px; }
+
+    @media (max-width: 650px) {
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-  <div id="loading-screen" class="loading-screen-container">
-    <div class="spinner"></div>
-    <h2 style="margin: 0; font-weight: 600; letter-spacing: 1px;">SNEC ACADEMICS</h2>
-    <p style="margin-top: 10px; color: #cbd5e1; font-size: 14px;">Loading portal, please wait...</p>
+  <!-- App Header -->
+  <div class="navbar" id="appNavbar" style="display: none;">
+    <div class="logo-container">
+      <span class="logo-text">SNEC ACADEMICS</span>
+      <span class="badge-role" id="userRoleBadge">Super Admin</span>
+    </div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
   </div>
 
-  <div id="login-page" class="login-container">
-    <div class="login-card">
-      <h2>SNEC ACADEMICS</h2>
-      <div class="input-group">
-        <label><i class="fa-solid fa-user"></i> User ID / Affiliation No</label>
-        <input type="text" id="username" placeholder="Enter ID">
-      </div>
-      <div class="input-group">
-        <label><i class="fa-solid fa-lock"></i> Password</label>
-        <input type="password" id="password" placeholder="Enter Password">
-      </div>
-      <p id="error-msg" style="color: #fc5c65; font-size: 14px; font-weight: bold; min-height: 18px; margin: 5px 0;"></p>
-      <button class="login-btn" onclick="login()">Sign In</button>
-      
-      <div class="guest-btn-group">
-        <button class="guest-action-btn" onclick="loginAsGuest('new teacher')">
-          <i class="fa-solid fa-user-plus" style="color: #05c46b;"></i>
-          <span>New Teacher</span>
-        </button>
-        <button class="guest-action-btn" onclick="loginAsGuest('general')">
-          <i class="fa-solid fa-users" style="color: #4b7bec;"></i>
-          <span>General / Public</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <div class="container">
 
-  <div id="dashboard-page" class="main-wrapper" style="display: none;">
-    <div class="global-header">
-      <div class="header-left">
-        <button class="menu-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-        <div class="brand-logo"><i class="fa-solid fa-graduation-cap"></i> SNEC ACADEMICS</div>
-      </div>
-      
-      <div class="top-nav-wrapper">
-        <button class="nav-scroll-btn" onclick="scrollTopNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-        <div id="top-portal-navbar" class="header-portal-links"></div>
-        <button class="nav-scroll-btn" onclick="scrollTopNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
-      </div>
-
-      <div class="header-right-actions">
-        <button id="view-toggle-btn" class="view-switch-btn" onclick="toggleLayoutMode()">
-          <i class="fa-solid fa-table-cells-large"></i> <span id="view-btn-text">Grid View</span>
-        </button>
-
-        <div class="header-user-profile">
-          <div class="user-text-details"><span id="user-display-name" class="u-name">-</span><span id="user-role" class="u-role">-</span></div>
-          <img id="user-profile-pic" src="" alt="Profile" onerror="this.src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png';">
-        </div>
-      </div>
-    </div>
-
-    <!-- Ticker Banner -->
-    <div id="ticker-container" style="display: none; background-color: #fff9c4; border-bottom: 2px solid #fbc02d; padding: 6px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); align-items: center; overflow: hidden; z-index: 1000; width: 100%; box-sizing: border-box;">
-      <div style="background-color: #d32f2f; color: #ffffff; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; display: flex; align-items: center; gap: 5px; margin-right: 10px; z-index: 2; box-shadow: 0 2px 5px rgba(211,47,47,0.3);">
-        <i class="fa-solid fa-bullhorn" style="font-size: 11px; animation: blink 1.2s infinite;"></i> NOTIFICATION
-      </div>
-      <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
-        <div id="ticker-marquee" style="display: inline-block; white-space: nowrap; animation: marqueeAnim 25s linear infinite; color: #b71c1c; font-weight: 600; font-size: 13.5px;">
-          Loading Notifications...
-        </div>
-      </div>
-    </div>
-
-    <div class="body-container">
-      <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
-      <div id="mainSidebar" class="sidebar">
-        <button class="sidebar-close-btn" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
-        <div class="sidebar-menu">
-          <div id="sidebar-mobile-portals"></div>
-          <div id="sidebar-menu-container"></div>
-        </div>
-        <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fa-solid fa-power-off"></i> Logout</button></div>
-      </div>
-
-      <div class="content-screen">
-        <div id="panel-home" class="page-panel active">
-          
-          <div id="modern-capsule-section" class="section-card">
-            <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-university" style="color: #1e3c72;"></i> Academic Control Hub</h3>
-            <div id="modern-grid-apps" class="uni-visual-grid"></div>
-          </div>
-
-          <div class="main-grid">
-            <div class="left-column">
-              <div id="notice-board-section-card" class="section-card">
-                <h3><i class="fa-solid fa-bullhorn" style="color: #05c46b;"></i> Notice Board</h3>
-                <div class="carousel-container">
-                  <div class="carousel-track" id="carousel-slides-container">
-                    <p style="color: #999; padding:20px; width: 100%; text-align: center;">No notifications.</p>
-                  </div>
-                  <button class="carousel-nav-btn btn-prev" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
-                  <button class="carousel-nav-btn btn-next" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div class="carousel-dots" id="carousel-dots-container"></div>
-              </div>
-              <div id="analytics-logs-section-card" class="section-card">
-                <h3><i class="fa-solid fa-folder-open" style="color: #4b7bec;"></i> Analytics & Logs</h3>
-                <div id="bottom-links-box" class="bottom-list-box"></div>
-              </div>
-            </div>
-            
-            <div class="right-column">
-              <div id="portal-traffic-section-card" class="section-card" style="margin-bottom: 25px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; border: none; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
-                <h3 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.08); font-weight: 700; padding-bottom: 12px; margin-bottom: 15px;"><i class="fa-solid fa-chart-line" style="color: #05c46b;"></i> Portal Traffic Analytics</h3>
-                <div style="display: flex; gap: 15px; justify-content: space-between;">
-                  <div style="flex: 1; background: rgba(255,255,255,0.04); padding: 12px 10px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.03);">
-                    <span style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; display: block; letter-spacing: 0.5px;">Today's Visits</span>
-                    <span id="stats-today" style="font-size: 22px; font-weight: 700; color: #05c46b; display: block; margin-top: 5px;">0</span>
-                  </div>
-                  <div style="flex: 1; background: rgba(255,255,255,0.04); padding: 12px 10px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.03);">
-                    <span style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; display: block; letter-spacing: 0.5px;">Total Visits</span>
-                    <span id="stats-total" style="font-size: 22px; font-weight: 700; color: #38bdf8; display: block; margin-top: 5px;">0</span>
-                  </div>
-                </div>
-              </div>
-
-              <div id="live-updates-section-card" class="section-card">
-                <h3><i class="fa-solid fa-bolt" style="color: #ff9f43;"></i> Live Updates & Quick Links</h3>
-                <div id="live-notifications-box" style="margin-bottom: 15px;">
-                  <p style="color: #999; text-align:center; font-size:12px; font-style:italic; padding:10px;">Loading updates...</p>
-                </div>
-                <div id="right-apps"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="panel-attendance" class="page-panel">
-          <div class="section-card">
-            <h3><i class="fa-solid fa-calendar-check" style="color: #1e3c72;"></i> Attendance Tracker</h3>
-            <div class="attendance-inputs">
-              <select id="dateInput"></select>
-              <select id="classSel"></select>
-              <button id="searchBtn" onclick="loadAttendanceData()">Search Data</button>
-            </div>
-            <div class="stat-box-grid">
-              <div class="stat-box">Total<br><span id="st-total" style="color: #1e3c72;">0</span></div>
-              <div class="stat-box" style="border-left-color: #05c46b;">Present<br><span id="st-present" style="color: #05c46b;">0</span></div>
-              <div class="stat-box" style="border-left-color: #fc5c65;">Absent<br><span id="st-absent" style="color: #fc5c65;">0</span></div>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead>
-                  <tr><th>Class Name</th><th>Total</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>P6</th><th>P7</th><th>P8</th><th>P9</th></tr>
-                </thead>
-                <tbody id="periodTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+    <!-- 1. LOGIN SECTION -->
+    <div id="loginSection" class="login-wrapper">
+      <div class="login-box">
+        <h2 style="margin: 0 0 5px 0; color: #1e40af;">SNEC Portal</h2>
+        <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Super Admin / Principal / Student Login</p>
         
-        <div id="subapp-tab-bar" style="display: none; background: #1e293b; padding: 6px 12px 0 12px; gap: 6px; overflow-x: auto; border-bottom: 1px solid #334155; border-radius: 12px 12px 0 0;"></div>
-        <div id="panel-appview" class="page-panel" style="position: relative;">
-          <button id="fs-toggle-btn" class="fullscreen-toggle-btn" onclick="toggleAppFullscreen()">
-            <i class="fa-solid fa-expand"></i>
-          </button>
-          <iframe id="app-window" class="iframe-container" src=""></iframe>
-        </div>
-        <button id="float-back" class="floating-btn back-btn" onclick="switchPanel('home')"><i class="fa-solid fa-arrow-left"></i></button>
-        <button id="float-home" class="floating-btn home-btn" onclick="switchPanel('home')"><i class="fa-solid fa-house"></i></button>
-      </div> 
-    </div> 
-  </div> 
+        <form id="loginForm">
+          <input type="password" id="loginKey" required placeholder="Enter PIN or Student UID / Mobile" style="margin-bottom: 12px;">
+          <button type="submit" class="btn-submit" id="loginBtn">Login to Portal</button>
+        </form>
 
-  <!-- Category Sub-Apps Modal -->
-  <div id="category-modal-overlay" class="category-modal-overlay">
-    <div class="category-modal-card">
-      <div class="category-modal-header">
-        <div id="category-modal-title" class="category-modal-title"></div>
-        <button class="category-modal-close" onclick="closeCategoryModal()">&times;</button>
+        <div id="loginMsg" style="margin-top: 12px; font-size: 13px; color: #dc2626; font-weight: 500;"></div>
       </div>
-      <div id="category-modal-content"></div>
     </div>
+
+    <!-- 2. MASTER DIRECTORY DASHBOARD (Super Admin & Principal) -->
+    <div id="dashboardSection" style="display: none;">
+      
+      <!-- Quick Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-val" id="totalCountDisplay">0</div>
+          <div class="stat-lbl">Total Students Loaded</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="filteredCountDisplay">0</div>
+          <div class="stat-lbl">Filtered Results</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="collegeCountDisplay">0</div>
+          <div class="stat-lbl">Total Institutions</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <!-- Multi-variable Filter Bar -->
+        <div class="filter-grid">
+          <input type="text" id="globalSearch" placeholder="Search by Name, UID, Ad No, Aadhaar...">
+          <select id="collegeFilter">
+            <option value="">All Colleges / Institutions</option>
+          </select>
+          <select id="classFilter">
+            <option value="">All Classes</option>
+          </select>
+          <select id="divisionFilter">
+            <option value="">All Divisions</option>
+          </select>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+          <div style="font-size: 13px; font-weight: 600; color: #475569;" id="statusText">Displaying data...</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-action btn-csv" id="exportBtn">Export to CSV</button>
+            <button class="btn-action btn-reload" id="reloadBtn">Refresh</button>
+          </div>
+        </div>
+
+        <!-- Scrollable Table -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Sl</th>
+                <th>UID / SNEC Ad</th>
+                <th>Full Name</th>
+                <th>Name (Arabic)</th>
+                <th>Institution</th>
+                <th>Class</th>
+                <th>Division</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Parent Phone</th>
+                <th>Guardian Phone</th>
+                <th>Place / Panchayat</th>
+                <th>District</th>
+                <th>State</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody">
+              <tr><td colspan="15" style="text-align:center; padding: 25px;">Loading students database...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. STUDENT PROFILE VIEW -->
+    <div id="studentSection" style="display: none;">
+      <div class="profile-card card">
+        <h3 style="margin-top: 0; color: #1e40af; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">Student Profile</h3>
+        <div id="studentProfileContent"></div>
+      </div>
+    </div>
+
   </div>
 
-  <div id="premium-preview-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(12px); z-index: 10000; align-items: center; justify-content: center; flex-direction: column; animation: modalFadeIn 0.2s ease-out;">
-    <div style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; width: calc(100% - 40px); box-sizing: border-box;">
-      <button onclick="closePremiumPreview()" style="display: flex; align-items: center; gap: 8px; padding: 10px 24px; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s;"><i class="fa-solid fa-arrow-left"></i> ← Back to Dashboard</button>
-      <span id="preview-modal-title" style="color: white; font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 50vw; letter-spacing: 0.5px;">Notice View</span>
-    </div>
-    <div style="width: 92%; height: 78vh; display: flex; align-items: center; justify-content: center; margin-top: 45px;">
-      <img id="preview-modal-img" src="" alt="Notice Document" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
-    </div>
-  </div>
+  <!-- Firebase Modular Scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  <div id="image-lightbox-modal" class="image-lightbox" onclick="closeImageLightbox(event)">
-    <button class="image-lightbox-close" onclick="closeImageLightbox(event, true)">&times;</button>
-    <div class="image-lightbox-content" onclick="event.stopPropagation()">
-      <img id="image-lightbox-img" src="" alt="Zoomed View">
-      <div id="image-lightbox-caption" class="image-lightbox-caption"></div>
-    </div>
-  </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5Ma_TfX4xDb30xcBrw1r_kyi0rFYSRm0",
+      authDomain: "snec-academics-14efa.firebaseapp.com",
+      projectId: "snec-academics-14efa",
+      storageBucket: "snec-academics-14efa.firebasestorage.app",
+      messagingSenderId: "302869991009",
+      appId: "1:302869991009:web:f7ed2f1b4a157a66ffe420",
+      measurementId: "G-602VWQ0HZW"
+    };
 
-  <script src="script.js"></script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Passcode Definitions
+    const SUPER_ADMIN_PIN = "9999";
+    
+    let allStudents = [];
+    let currentRole = null; // 'admin' | 'principal' | 'student'
+    let assignedCollege = null;
+
+    // --- LOGIN HANDLER ---
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const key = document.getElementById("loginKey").value.trim();
+      const msg = document.getElementById("loginMsg");
+      const btn = document.getElementById("loginBtn");
+
+      msg.innerText = "";
+      btn.disabled = true;
+      btn.innerText = "Authenticating...";
+
+      if (key === SUPER_ADMIN_PIN) {
+        currentRole = 'admin';
+        document.getElementById("userRoleBadge").innerText = "Super Admin";
+        showDashboard();
+      } else {
+        // First check if it matches a registered student UID
+        try {
+          const docRef = doc(db, "students", key);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            currentRole = 'student';
+            document.getElementById("userRoleBadge").innerText = "Student Portal";
+            showStudentProfile(docSnap.data());
+          } else {
+            // Check by Phone number query if direct UID not found
+            await loadAllStudents();
+            const foundByPhone = allStudents.find(s => 
+              s["Contact No of Parent"] == key || 
+              s["Mobile Number of Guardian"] == key ||
+              s["Phone No"] == key
+            );
+
+            if (foundByPhone) {
+              currentRole = 'student';
+              document.getElementById("userRoleBadge").innerText = "Student Portal";
+              showStudentProfile(foundByPhone);
+            } else {
+              msg.innerText = "Invalid PIN, UID, or Mobile Number!";
+            }
+          }
+        } catch (err) {
+          msg.innerText = "Login error: " + err.message;
+        }
+      }
+      btn.disabled = false;
+      btn.innerText = "Login to Portal";
+    });
+
+    async function loadAllStudents() {
+      if (allStudents.length > 0) return;
+      const snap = await getDocs(collection(db, "students"));
+      allStudents = [];
+      snap.forEach(d => allStudents.push({ id: d.id, ...d.data() }));
+    }
+
+    async function showDashboard() {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("appNavbar").style.display = "flex";
+      document.getElementById("studentSection").style.display = "none";
+      document.getElementById("dashboardSection").style.display = "block";
+
+      await loadAllStudents();
+      populateDropdownFilters();
+      renderTableData(allStudents);
+    }
+
+    function showStudentProfile(data) {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("appNavbar").style.display = "flex";
+      document.getElementById("dashboardSection").style.display = "none";
+      document.getElementById("studentSection").style.display = "block";
+
+      document.getElementById("studentProfileContent").innerHTML = `
+        <div class="detail-grid">
+          <div class="detail-item"><strong>STUDENT NAME</strong> ${data["NAME OF THE STUDENT"] || '-'}</div>
+          <div class="detail-item"><strong>NAME IN ARABIC</strong> ${data["NAME OF THE STUDENT IN ARABIC"] || '-'}</div>
+          <div class="detail-item"><strong>UID / SNEC AD NO</strong> ${data["UID/ SNEC Ad. No"] || data.id}</div>
+          <div class="detail-item"><strong>COLLEGE AD NO</strong> ${data["COLLEGE Ad. No"] || '-'}</div>
+          <div class="detail-item"><strong>INSTITUTION</strong> ${data["INSTITUTION"] || '-'}</div>
+          <div class="detail-item"><strong>CLASS & DIVISION</strong> ${data["CLASS"] || '-'} (${data["Division"] || '-'})</div>
+          <div class="detail-item"><strong>DATE OF BIRTH</strong> ${data["Date of Birth"] || '-'}</div>
+          <div class="detail-item"><strong>BLOOD GROUP</strong> ${data["Blood Group"] || '-'}</div>
+          <div class="detail-item"><strong>FATHER'S NAME</strong> ${data["NAME OF FATHER"] || '-'}</div>
+          <div class="detail-item"><strong>PARENT CONTACT</strong> ${data["Contact No of Parent"] || '-'}</div>
+          <div class="detail-item"><strong>TALUK / DISTRICT</strong> ${data["Taluk"] || '-'}, ${data["District"] || '-'}</div>
+          <div class="detail-item"><strong>STATUS</strong> <span style="color:#16a34a; font-weight:700;">${data["Student Presence"] || data["recordStatus"] || 'Active'}</span></div>
+        </div>
+      `;
+    }
+
+    function populateDropdownFilters() {
+      const colleges = new Set();
+      const classes = new Set();
+      const divisions = new Set();
+
+      allStudents.forEach(s => {
+        if (s["INSTITUTION"]) colleges.add(s["INSTITUTION"].trim());
+        if (s["CLASS"]) classes.add(String(s["CLASS"]).trim());
+        if (s["Division"]) divisions.add(String(s["Division"]).trim());
+      });
+
+      const colSelect = document.getElementById("collegeFilter");
+      colSelect.innerHTML = '<option value="">All Colleges / Institutions</option>';
+      Array.from(colleges).sort().forEach(c => colSelect.innerHTML += `<option value="${c}">${c}</option>`);
+
+      const clsSelect = document.getElementById("classFilter");
+      clsSelect.innerHTML = '<option value="">All Classes</option>';
+      Array.from(classes).sort().forEach(c => clsSelect.innerHTML += `<option value="${c}">${c}</option>`);
+
+      const divSelect = document.getElementById("divisionFilter");
+      divSelect.innerHTML = '<option value="">All Divisions</option>';
+      Array.from(divisions).sort().forEach(d => divSelect.innerHTML += `<option value="${d}">${d}</option>`);
+
+      document.getElementById("totalCountDisplay").innerText = allStudents.length;
+      document.getElementById("collegeCountDisplay").innerText = colleges.size;
+    }
+
+    function renderTableData(data) {
+      const tb = document.getElementById("studentTableBody");
+      document.getElementById("filteredCountDisplay").innerText = data.length;
+
+      if (!data.length) {
+        tb.innerHTML = '<tr><td colspan="15" style="text-align:center; padding: 25px;">No students found matching current filters.</td></tr>';
+        return;
+      }
+
+      tb.innerHTML = data.slice(0, 500).map((s, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td><strong>${s["UID/ SNEC Ad. No"] || s.id}</strong></td>
+          <td>${s["NAME OF THE STUDENT"] || '-'}</td>
+          <td>${s["NAME OF THE STUDENT IN ARABIC"] || '-'}</td>
+          <td>${s["INSTITUTION"] || '-'}</td>
+          <td>${s["CLASS"] || '-'}</td>
+          <td>${s["Division"] || '-'}</td>
+          <td>${s["Gender"] || '-'}</td>
+          <td>${s["Date of Birth"] || '-'}</td>
+          <td>${s["Contact No of Parent"] || '-'}</td>
+          <td>${s["Mobile Number of Guardian"] || '-'}</td>
+          <td>${s["PANCHAYAT/ MUNICIPALITY/ CORPORATION"] || '-'}</td>
+          <td>${s["District"] || '-'}</td>
+          <td>${s["STATE"] || '-'}</td>
+          <td><button onclick="viewStudentModal('${s.id}')" style="padding:4px 8px; border:none; background:#dbeafe; color:#1e40af; border-radius:4px; cursor:pointer; font-weight:600;">View</button></td>
+        </tr>
+      `).join('');
+
+      if (data.length > 500) {
+        tb.innerHTML += `<tr><td colspan="15" style="text-align:center; background:#f8fafc; font-weight:600;">Showing first 500 of ${data.length} records. Refine search/filters to narrow down.</td></tr>`;
+      }
+    }
+
+    // Dynamic Filter Handler
+    function filterStudents() {
+      const q = document.getElementById("globalSearch").value.toLowerCase();
+      const col = document.getElementById("collegeFilter").value;
+      const cls = document.getElementById("classFilter").value;
+      const div = document.getElementById("divisionFilter").value;
+
+      const filtered = allStudents.filter(s => {
+        const matchQ = !q || 
+          (s["NAME OF THE STUDENT"] && s["NAME OF THE STUDENT"].toLowerCase().includes(q)) ||
+          (s["UID/ SNEC Ad. No"] && String(s["UID/ SNEC Ad. No"]).toLowerCase().includes(q)) ||
+          (s["COLLEGE Ad. No"] && String(s["COLLEGE Ad. No"]).toLowerCase().includes(q)) ||
+          (s["Aadhaar No"] && String(s["Aadhaar No"]).includes(q)) ||
+          (s["Contact No of Parent"] && String(s["Contact No of Parent"]).includes(q));
+
+        const matchCol = !col || s["INSTITUTION"] === col;
+        const matchCls = !cls || String(s["CLASS"]) === cls;
+        const matchDiv = !div || String(s["Division"]) === div;
+
+        return matchQ && matchCol && matchCls && matchDiv;
+      });
+
+      renderTableData(filtered);
+    }
+
+    document.getElementById("globalSearch").addEventListener("input", filterStudents);
+    document.getElementById("collegeFilter").addEventListener("change", filterStudents);
+    document.getElementById("classFilter").addEventListener("change", filterStudents);
+    document.getElementById("divisionFilter").addEventListener("change", filterStudents);
+
+    // CSV Export
+    document.getElementById("exportBtn").addEventListener("click", () => {
+      let csv = "Sl,UID,Name,Name Arabic,College,Class,Division,DOB,Parent Phone,District\n";
+      allStudents.forEach((s, i) => {
+        csv += `"${i+1}","${s["UID/ SNEC Ad. No"]||s.id}","${s["NAME OF THE STUDENT"]||''}","${s["NAME OF THE STUDENT IN ARABIC"]||''}","${s["INSTITUTION"]||''}","${s["CLASS"]||''}","${s["Division"]||''}","${s["Date of Birth"]||''}","${s["Contact No of Parent"]||''}","${s["District"]||''}"\n`;
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+      link.download = `SNEC_Students_Master_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+    });
+
+    document.getElementById("reloadBtn").addEventListener("click", async () => {
+      allStudents = [];
+      await showDashboard();
+    });
+
+    window.logout = function() {
+      currentRole = null;
+      document.getElementById("loginKey").value = "";
+      document.getElementById("appNavbar").style.display = "none";
+      document.getElementById("dashboardSection").style.display = "none";
+      document.getElementById("studentSection").style.display = "none";
+      document.getElementById("loginSection").style.display = "flex";
+    };
+
+    window.viewStudentModal = function(id) {
+      const s = allStudents.find(item => item.id === id);
+      if (s) showStudentProfile(s);
+    };
+
+  </script>
 </body>
 </html>
